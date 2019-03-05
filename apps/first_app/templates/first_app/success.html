@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <title>Document</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">Welcome {{user.first_name}}</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/trips/new">Create A Trip</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Destination</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for trip in your_trips%}
+      <tr>
+        <th><a href="/trips/{{trip.id}}">{{trip.destination}}</a></th>
+        <td>{{trip.start_date}}</td>
+        <td>{{trip.end_date}}</td>
+        <td>
+          {% if trip.created_by.id == user.id %}
+          <a href="/edit/{{trip.id}}">Edit</a>
+          <a href="/delete/{{trip.id}}">Remove</a>
+          {% else %}
+          <a href="/cancel/{{trip.id}}">Cancel</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <table class="table table-dark">
+    <thead>
+        <tr>
+          <th scope="col">Destination</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Action</th>
+        </tr>
+    </thead>
+      <tbody>
+        {% for trip in other_trips %}
+        <tr>
+          <th><a href="/trips/{{trip.id}}">{{trip.destination}}</a></th>
+          <td>{{trip.start_date}}</td>
+          <td>{{trip.end_date}}</td>
+          <td>
+            <a href="/join/{{trip.id}}">Join</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+  </html>
+</body>
+</html>

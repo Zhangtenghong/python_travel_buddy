@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <title>Document</title>
+  <style>
+    .messages{
+      color:red
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">Welcome {{user.first_name}}</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">Back</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+  <form action="/update/{{edit_trip.id}}" method="post">
+    {% csrf_token %}
+      <div class="col-8">
+        <label for="exampleInputEmail1">Destination:</label>
+        <input type="text" class="form-control" name="destination" value="{{edit_trip.destination}}">
+      </div>
+      <div class="form-group row">
+        <label for="example-date-input" class="col-2 col-form-label">Start Date</label>
+        <div class="col-10">
+          <input class="form-control" type="date" name="startdate" value="{{edit_trip.start_date}}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-date-input" class="col-2 col-form-label">End Date</label>
+        <div class="col-10">
+          <input class="form-control" type="date" name="enddate" value="{{edit_trip.end_date}}">
+        </div>
+      </div>
+      <div class="col-8">
+        <label for="exampleInputPassword1">Plan:</label>
+        <textarea class="form-control" name="plan" rows="3">{{edit_trip.plan}}</textarea>
+      </div>
+      <br>
+      <div class="col-8">
+        <button type="submit" class="btn  btn-primary">Submit</button>
+      </div>
+  </form>
+</body>
+</html>
